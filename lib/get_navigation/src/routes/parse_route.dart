@@ -278,7 +278,12 @@ class ParseRouteTree {
     }
     for (var i = 0; i < routePath.keys.length; i++) {
       var param = Uri.decodeQueryComponent(paramsMatch[i + 1]!);
-      params[routePath.keys[i]!] = param;
+      try {
+        var param = Uri.decodeQueryComponent(paramsMatch![i + 1]!);
+        params[routePath.keys[i]!] = param;
+      }catch (e){
+        debugPrint('Failed to decode query param: error=$e');
+      }
     }
     return params;
   }
